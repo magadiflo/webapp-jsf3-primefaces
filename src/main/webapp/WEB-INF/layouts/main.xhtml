@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="#{lenguajeController.locale}">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        locale="#{lenguajeController.locale}">
+
+    <h:head>
+        <meta charset="UTF-8"/>
+        <title>#{titulo}</title>
+        <h:outputStylesheet name="css/bootstrap.min.css"/>
+        <ui:insert name="head"/>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"> </span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <h:link outcome="index" value="#{msg['navbar.texto.inicio']}" class="nav-link active"/>
+                        </li>
+                        <li class="nav-item">
+                            <h:link outcome="form" value="#{msg['navbar.texto.crear']}" class="nav-link"/>
+                        </li>
+                        <li class="nav-item">
+                            <h:form>
+                                <h:selectOneMenu value="#{lenguajeController.lenguaje}"
+                                                 valueChangeListener="#{lenguajeController.seleccionar}"
+                                                 onchange="submit()" class="form-select">
+                                    <f:selectItem itemLabel="#{msg['navbar.texto.cambiar.lenguaje']}" itemValue="es"/>
+                                    <f:selectItems value="#{lenguajeController.lenguajesSoportados}" />
+                                </h:selectOneMenu>
+                            </h:form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <h:messages globalOnly="true" styleClass="alert"
+                        errorClass="alert alert-danger"
+                        infoClass="alert alert-success"
+                        warnClass="alert alert-warning"/>
+            <ui:insert name="content"/>
+            <hr/>
+            <footer style="clear: both;">
+                <h:graphicImage value="/resources/images/jakarta.png"/>
+                <p>
+                    <h:outputText value="#{msg['footer.texto.autor']}"/>
+                </p>
+                <h:outputScript name="js/bootstrap.bundle.min.js"/>
+                <ui:insert name="js"/>
+            </footer>
+        </div>
+    </h:body>
+</f:view>
+</html>
