@@ -7,17 +7,20 @@
 
     <ui:define name="content">
 
-        <p:card columns="1">
-            <f:facet name="header">
+        <p:card>
+            <f:facet name="title">
                 <h:outputText value="#{titulo}"/>
             </f:facet>
             <p:divider/>
             <h:form id="crearForm">
                 <p:commandButton value="#{msg['navbar.texto.crear']}" action="form.xhtml" class="p-my-2"/>
             </h:form>
-            <h:outputText value="#{msg['producto.texto.noexiste']}" rendered="#{empty listado}"
+            <h:outputText value="#{msg['producto.texto.noexiste']}" rendered="#{empty productoController.listado}"
                           class="alert alert-warning"/>
-            <p:dataTable value="#{listado}" var="prod" rendered="#{not empty listado}" style="max-width:65%;">
+            <p:dataTable value="#{productoController.listado}"
+                         var="prod" rendered="#{not empty productoController.listado}"
+                         style="max-width:65%;"
+                         id="tabla">
                 <p:column headerText="#{msg['producto.id']}">
                     <h:outputText value="#{prod.id}"/>
                 </p:column>
@@ -53,7 +56,7 @@
                     <h:form id="eliminar">
                         <p:commandButton value="#{msg['producto.boton.eliminar']}" action="#{productoController.eliminar(prod)}"
                                        onclick="return confirm('¿Está seguro que desea eliminar el producto: #{prod.nombre}?')"
-                                         class="ui-button-danger"/>
+                                         class="ui-button-danger" update="tabla"/>
                     </h:form>
                 </p:column>
             </p:dataTable>

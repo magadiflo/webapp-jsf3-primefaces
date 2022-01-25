@@ -71,7 +71,7 @@
                 <div class="p-field p-grid">
                     <p:commandButton
                             value="#{producto.id > 0 ? msg['producto.boton.editar'] : msg['producto.boton.crear']}"
-                            action="#{productoController.guardar}" class="ui-button-warning" ajax="false"/>
+                            action="#{productoController.guardar}" class="ui-button-warning" update="@form"/>
                     <h:inputHidden value="#{producto.id}"/>
                 </div>
             </h:form>

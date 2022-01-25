@@ -1,6 +1,6 @@
 package org.magadiflo.webapp.jsf3.controllers;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.inject.Model;
 import jakarta.enterprise.inject.Produces;
 import jakarta.faces.application.FacesMessage;
@@ -39,17 +39,11 @@ public class ProductoController {
     @Named("msg")
     private ResourceBundle bundle;
 
-    /**
-     * Aquí tanto el @RequestScoped y el @Named se puso por separado en vez de usar
-     * @Model, ya que @Model agrupa a ambos. Necesariamente se pone de esta forma, ya
-     * que se le dará otro nombre, caso contrario tomaría por defecto el nombre tal
-     * cual del método findAll. En nuestro caso se llamará listado
-     */
-    @Produces
-    @RequestScoped
-    @Named("listado")
-    public List<Producto> findAll() {
-        return this.service.listar();
+    private List<Producto> listado;
+
+    @PostConstruct
+    public void init() {
+        this.listado = this.service.listar();
     }
 
     @Produces
@@ -78,7 +72,8 @@ public class ProductoController {
             this.facesContext.addMessage(null, new FacesMessage(String.format(bundle.getString("producto.mensaje.crear"), producto.getNombre())));
         }
         this.service.guardar(producto);
-        return "index.xhtml?faces-redirect=true"; //si queremos redireccionar
+        this.listado = this.service.listar();
+        return "index.xhtml";
     }
 
     public String editar(Long id) {
@@ -86,10 +81,10 @@ public class ProductoController {
         return "form.xhtml";
     }
 
-    public String eliminar(Producto producto) {
+    public void eliminar(Producto producto) {
         this.service.eliminar(producto.getId());
         this.facesContext.addMessage(null, new FacesMessage(String.format(bundle.getString("producto.mensaje.eliminar"), producto.getNombre())));
-        return "index.xhtml?faces-redirect=true";
+        this.listado = this.service.listar();
     }
 
     public Long getId() {
@@ -98,5 +93,13 @@ public class ProductoController {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Producto> getListado() {
+        return listado;
+    }
+
+    public void setListado(List<Producto> listado) {
+        this.listado = listado;
     }
 }
