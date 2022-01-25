@@ -3,6 +3,7 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/layouts/main.xhtml">
 
     <ui:define name="content">
@@ -10,50 +11,51 @@
         <f:metadata>
             <f:viewParam name="id" value="#{productoController.id}"/>
         </f:metadata>
-        <h:panelGrid border="1" class="table">
+        <p:panelGrid columns="1">
             <f:facet name="header">
                 <h:outputText value="#{producto.id > 0 ? msg['producto.boton.editar'] : msg['producto.boton.crear']} #{msg['producto.texto']}"/>
             </f:facet>
 
             <h:form>
-                <h:panelGrid columns="3" class="table table-hover table-striped table-bordered">
-                    <h:outputLabel value="#{msg['producto.nombre']}" for="nombre" class="col-form-label"/>
-                    <h:inputText id="nombre" value="#{producto.nombre}" label="Nombre" class="form-control"/>
-                    <h:message for="nombre" style="color: red;"/>
+                <p:panelGrid columns="3">
+                    <p:outputLabel value="#{msg['producto.nombre']}" for="nombre" class="col-form-label"/>
+                    <p:inputText id="nombre" value="#{producto.nombre}" label="Nombre" class="form-control"/>
+                    <p:message for="nombre" style="color: red;"/>
 
-                    <h:outputLabel value="#{msg['producto.precio']}" for="precio" class="col-form-label"/>
-                    <h:inputText id="precio" value="#{producto.precio}" label="Precio" class="form-control"/>
-                    <h:message for="precio" style="color: red;"/>
+                    <p:outputLabel value="#{msg['producto.precio']}" for="precio" class="col-form-label"/>
+                    <p:inputText id="precio" value="#{producto.precio}" label="Precio" class="form-control"/>
+                    <p:message for="precio" style="color: red;"/>
 
-                    <h:outputLabel value="#{msg['producto.sku']}" for="sku" class="col-form-label"/>
-                    <h:inputText id="sku" value="#{producto.sku}" label="Sku" class="form-control"/>
-                    <h:message for="sku" style="color: red;"/>
+                    <p:outputLabel value="#{msg['producto.sku']}" for="sku" class="col-form-label"/>
+                    <p:inputText id="sku" value="#{producto.sku}" label="Sku" class="form-control"/>
+                    <p:message for="sku" style="color: red;"/>
 
-                    <h:outputLabel value="#{msg['producto.fechaRegistro']}" for="fechaRegistro" class="col-form-label"/>
-                    <h:inputText id="fechaRegistro" value="#{producto.fechaRegistro}"
+                    <p:outputLabel value="#{msg['producto.fechaRegistro']}" for="fechaRegistro" class="col-form-label"/>
+                    <p:datePicker pattern="yyyy-MM-dd" id="fechaRegistro" value="#{producto.fechaRegistro}"
                                  convertMessage="Indique la fecha con yyyy-MM-dd"
                                  label="Fecha Registro" class="form-control">
                         <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
                         <f:passThroughAttribute name="type" value="date"/>
-                    </h:inputText>
-                    <h:message for="fechaRegistro" style="color: red;"/>
+                    </p:datePicker>
 
-                    <h:outputLabel value="#{msg['producto.categoria']}" for="categoria" class="col-form-label"/>
-                    <h:selectOneMenu id="categoria" value="#{producto.categoria}" class="form-select">
+                    <p:message for="fechaRegistro" style="color: red;"/>
+
+                    <p:outputLabel value="#{msg['producto.categoria']}" for="categoria" class="col-form-label"/>
+                    <p:selectOneMenu id="categoria" value="#{producto.categoria}" class="form-select">
                         <f:selectItem itemLabel="- Seleccionar -" itemValue="#{null}"/>
                         <f:selectItems value="#{categorias}" var="cat" itemLabel="#{cat.nombre}"/>
                         <f:converter binding="#{categoriaConverter}"/>
-                    </h:selectOneMenu>
-                    <h:message for="categoria" style="color: red;"/>
+                    </p:selectOneMenu>
+                    <p:message for="categoria" style="color: red;"/>
 
-                    <h:commandButton value="#{producto.id > 0 ? msg['producto.boton.editar'] : msg['producto.boton.crear']}"
-                                     action="#{productoController.guardar}" class="btn btn-primary"/>
+                    <p:commandButton value="#{producto.id > 0 ? msg['producto.boton.editar'] : msg['producto.boton.crear']}"
+                                     action="#{productoController.guardar}" class="ui-button-warning" ajax="false"/>
                     <h:inputHidden value="#{producto.id}"/>
                     <p>&#160;</p>
 
-                </h:panelGrid>
+                </p:panelGrid>
             </h:form>
-        </h:panelGrid>
+        </p:panelGrid>
 
     </ui:define>
 
