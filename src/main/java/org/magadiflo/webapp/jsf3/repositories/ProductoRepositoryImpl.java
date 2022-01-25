@@ -8,7 +8,7 @@ import org.magadiflo.webapp.jsf3.entities.Producto;
 import java.util.List;
 
 @RequestScoped
-public class ProductoRepositoryImpl implements CrudRepository<Producto> {
+public class ProductoRepositoryImpl implements ProductoRepository {
 
     @Inject
     private EntityManager em;
@@ -41,4 +41,10 @@ public class ProductoRepositoryImpl implements CrudRepository<Producto> {
         this.em.remove(p);
     }
 
+    @Override
+    public List<Producto> buscarPorNombre(String nombre) {
+        return this.em.createQuery("SELECT p FROM Producto AS p LEFT OUTER JOIN FETCH p.categoria WHERE p.nombre LIKE :nombre", Producto.class)
+                .setParameter("nombre", "%" + nombre + "%")
+                .getResultList();
+    }
 }

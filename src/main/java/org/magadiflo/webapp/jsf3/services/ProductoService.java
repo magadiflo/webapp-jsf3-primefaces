@@ -22,4 +22,6 @@ public interface ProductoService {
 
     Optional<Categoria> porIdCategoria(Long id);
 
+    List<Producto> buscarPorNombre(String nombre);
+
 }

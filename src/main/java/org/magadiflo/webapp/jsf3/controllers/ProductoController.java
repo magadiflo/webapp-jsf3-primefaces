@@ -41,6 +41,8 @@ public class ProductoController {
 
     private List<Producto> listado;
 
+    private String textoBuscar;
+
     @PostConstruct
     public void init() {
         this.listado = this.service.listar();
@@ -87,6 +89,10 @@ public class ProductoController {
         this.listado = this.service.listar();
     }
 
+    public void buscar() {
+        this.listado = this.service.buscarPorNombre(this.textoBuscar);
+    }
+
     public Long getId() {
         return id;
     }
@@ -101,5 +107,13 @@ public class ProductoController {
 
     public void setListado(List<Producto> listado) {
         this.listado = listado;
+    }
+
+    public String getTextoBuscar() {
+        return textoBuscar;
+    }
+
+    public void setTextoBuscar(String textoBuscar) {
+        this.textoBuscar = textoBuscar;
     }
 }

@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import org.magadiflo.webapp.jsf3.entities.Categoria;
 import org.magadiflo.webapp.jsf3.entities.Producto;
 import org.magadiflo.webapp.jsf3.repositories.CrudRepository;
+import org.magadiflo.webapp.jsf3.repositories.ProductoRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +14,7 @@ import java.util.Optional;
 public class ProductoServiceImpl implements ProductoService {
 
     @Inject
-    private CrudRepository<Producto> productoCrudRepository;
+    private ProductoRepository productoCrudRepository;
 
     @Inject
     private CrudRepository<Categoria> categoriaCrudRepository;
@@ -46,5 +47,10 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public Optional<Categoria> porIdCategoria(Long id) {
         return Optional.ofNullable(this.categoriaCrudRepository.porId(id));
+    }
+
+    @Override
+    public List<Producto> buscarPorNombre(String nombre) {
+        return this.productoCrudRepository.buscarPorNombre(nombre);
     }
 }
