@@ -46,10 +46,11 @@ public class ProductoController {
     @PostConstruct
     public void init() {
         this.listado = this.service.listar();
+        this.producto = new Producto();
     }
 
-    @Produces
-    @Model //request + named
+//    @Produces
+//    @Model //request + named
     public Producto producto() {
         this.producto = new Producto();
         if(this.id != null && this.id > 0){
@@ -66,7 +67,7 @@ public class ProductoController {
         return this.service.listarCategorias();
     }
 
-    public String guardar() {
+    public void guardar() {
         System.out.println(this.producto);
         if(producto.getId() != null && producto.getId() > 0){
             this.facesContext.addMessage(null, new FacesMessage(String.format(bundle.getString("producto.mensaje.editar"), producto.getNombre())));
@@ -75,12 +76,12 @@ public class ProductoController {
         }
         this.service.guardar(producto);
         this.listado = this.service.listar();
-        return "index.xhtml";
+        this.producto = new Producto();
     }
 
-    public String editar(Long id) {
+    public void editar(Long id) {
         this.id = id;
-        return "form.xhtml";
+        this.producto();
     }
 
     public void eliminar(Producto producto) {
@@ -91,6 +92,11 @@ public class ProductoController {
 
     public void buscar() {
         this.listado = this.service.buscarPorNombre(this.textoBuscar);
+    }
+
+    public void cerrarDialogo() {
+        System.out.println("Cerrando la ventana de dialogo..................!");
+        this.producto = new Producto();
     }
 
     public Long getId() {
@@ -115,5 +121,13 @@ public class ProductoController {
 
     public void setTextoBuscar(String textoBuscar) {
         this.textoBuscar = textoBuscar;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 }

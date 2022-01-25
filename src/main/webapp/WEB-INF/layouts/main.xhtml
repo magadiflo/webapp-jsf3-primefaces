@@ -18,7 +18,7 @@
             <h:form>
                 <p:menubar>
                     <p:menuitem value="#{msg['navbar.texto.inicio']}" outcome="index" icon="pi pi-fw pi-home"/>
-                    <p:menuitem value="#{msg['navbar.texto.crear']}" outcome="form" icon="pi pi-fw pi-plus"/>
+                    <p:menuitem value="#{msg['navbar.texto.crear']}" onclick="PF('dialogForm').show()" icon="pi pi-fw pi-plus"/>
                     <p:menuitem icon="pi pi-fw pi-flag">
                         <p:selectOneMenu value="#{lenguajeController.lenguaje}"
                                          valueChangeListener="#{lenguajeController.seleccionar}"
@@ -31,7 +31,9 @@
             </h:form>
 
             <div class="p-mb-2">
-                <p:messages globalOnly="true" closable="true"/>
+                <p:messages globalOnly="true" closable="true">
+                    <p:autoUpdate/>
+                </p:messages>
                 <ui:insert name="content"/>
             </div>
             <p:divider/>

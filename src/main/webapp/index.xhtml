@@ -13,7 +13,9 @@
             </f:facet>
             <p:divider/>
             <h:form id="crearForm">
-                <p:commandButton value="#{msg['navbar.texto.crear']}" action="form.xhtml" class="p-my-2"/>
+                <p:commandButton value="#{msg['navbar.texto.crear']}" class="p-my-2" onclick="PF('dialogForm').show()" icon="pi pi-plus-circle">
+                    <p:resetInput target="formProducto"/>
+                </p:commandButton>
             </h:form>
             <h:outputText value="#{msg['producto.texto.noexiste']}" rendered="#{empty productoController.listado}"
                           class="alert alert-warning"/>
@@ -62,22 +64,20 @@
                 <p:column headerText="#{msg['producto.boton.editar']}">
                     <h:form id="editarForm">
                         <p:commandButton value="#{msg['producto.boton.editar']}" action="#{productoController.editar(prod.id)}"
-                                       class="ui-button-success"/>
+                                         class="ui-button-success" onclick="PF('dialogForm').show()" icon="pi pi-save" update="formProducto">
+                            <p:resetInput target="formProducto"/>
+                        </p:commandButton>
                     </h:form>
-                </p:column>
-                <p:column headerText="#{msg['producto.boton.editar']}">
-                    <p:linkButton value="#{msg['producto.boton.editar']}" outcome="form" class="ui-button-info">
-                        <f:param name="id" value="#{prod.id}"/>
-                    </p:linkButton>
                 </p:column>
                 <p:column headerText="#{msg['producto.boton.eliminar']}">
                     <h:form id="eliminar">
                         <p:commandButton value="#{msg['producto.boton.eliminar']}" action="#{productoController.eliminar(prod)}"
                                        onclick="return confirm('¿Está seguro que desea eliminar el producto: #{prod.nombre}?')"
-                                         class="ui-button-danger" update="tabla"/>
+                                         class="ui-button-danger" update="tabla" icon="pi pi-trash"/>
                     </h:form>
                 </p:column>
             </p:dataTable>
+
         </p:card>
 
     </ui:define>
