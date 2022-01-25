@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -11,51 +10,72 @@
         <f:metadata>
             <f:viewParam name="id" value="#{productoController.id}"/>
         </f:metadata>
-        <p:panelGrid columns="1">
-            <f:facet name="header">
-                <h:outputText value="#{producto.id > 0 ? msg['producto.boton.editar'] : msg['producto.boton.crear']} #{msg['producto.texto']}"/>
-            </f:facet>
-
+        <p:panel
+                header="#{producto.id > 0 ? msg['producto.boton.editar'] : msg['producto.boton.crear']} #{msg['producto.texto']}">
+            <p:linkButton outcome="index" value="#{msg['producto.boton.volver']}" class="p-my-2"/>
             <h:form>
-                <p:panelGrid columns="3">
-                    <p:outputLabel value="#{msg['producto.nombre']}" for="nombre" class="col-form-label"/>
-                    <p:inputText id="nombre" value="#{producto.nombre}" label="Nombre" class="form-control"/>
-                    <p:message for="nombre" style="color: red;"/>
-
-                    <p:outputLabel value="#{msg['producto.precio']}" for="precio" class="col-form-label"/>
-                    <p:inputText id="precio" value="#{producto.precio}" label="Precio" class="form-control"/>
-                    <p:message for="precio" style="color: red;"/>
-
-                    <p:outputLabel value="#{msg['producto.sku']}" for="sku" class="col-form-label"/>
-                    <p:inputText id="sku" value="#{producto.sku}" label="Sku" class="form-control"/>
-                    <p:message for="sku" style="color: red;"/>
-
-                    <p:outputLabel value="#{msg['producto.fechaRegistro']}" for="fechaRegistro" class="col-form-label"/>
-                    <p:datePicker pattern="yyyy-MM-dd" id="fechaRegistro" value="#{producto.fechaRegistro}"
-                                 convertMessage="Indique la fecha con yyyy-MM-dd"
-                                 label="Fecha Registro" class="form-control">
-                        <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
-                        <f:passThroughAttribute name="type" value="date"/>
-                    </p:datePicker>
-
-                    <p:message for="fechaRegistro" style="color: red;"/>
-
-                    <p:outputLabel value="#{msg['producto.categoria']}" for="categoria" class="col-form-label"/>
-                    <p:selectOneMenu id="categoria" value="#{producto.categoria}" class="form-select">
-                        <f:selectItem itemLabel="- Seleccionar -" itemValue="#{null}"/>
-                        <f:selectItems value="#{categorias}" var="cat" itemLabel="#{cat.nombre}"/>
-                        <f:converter binding="#{categoriaConverter}"/>
-                    </p:selectOneMenu>
-                    <p:message for="categoria" style="color: red;"/>
-
-                    <p:commandButton value="#{producto.id > 0 ? msg['producto.boton.editar'] : msg['producto.boton.crear']}"
-                                     action="#{productoController.guardar}" class="ui-button-warning" ajax="false"/>
+                <div class="p-field p-grid">
+                    <p:outputLabel value="#{msg['producto.nombre']}" for="nombre" class="p-col-fixed" style="width: 200px;"/>
+                    <div class="p-col">
+                        <p:inputText id="nombre" value="#{producto.nombre}" label="Nombre"/>
+                    </div>
+                    <div class="p-col">
+                        <p:message for="nombre" style="color: red;"/>
+                    </div>
+                </div>
+                <div class="p-field p-grid">
+                    <p:outputLabel value="#{msg['producto.precio']}" for="precio" class="p-col-fixed" style="width: 200px;"/>
+                    <div class="p-col">
+                        <p:inputText id="precio" value="#{producto.precio}" label="Precio"/>
+                    </div>
+                    <div class="p-col">
+                        <p:message for="precio" style="color: red;"/>
+                    </div>
+                </div>
+                <div class="p-field p-grid">
+                    <p:outputLabel value="#{msg['producto.sku']}" for="sku" class="p-col-fixed" style="width: 200px;"/>
+                    <div class="p-col">
+                        <p:inputText id="sku" value="#{producto.sku}" label="Sku"/>
+                    </div>
+                    <div class="p-col">
+                        <p:message for="sku" style="color: red;"/>
+                    </div>
+                </div>
+                <div class="p-field p-grid">
+                    <p:outputLabel value="#{msg['producto.fechaRegistro']}" for="fechaRegistro" class="p-col-fixed" style="width: 200px;"/>
+                    <div class="p-col">
+                        <p:datePicker pattern="yyyy-MM-dd" id="fechaRegistro" value="#{producto.fechaRegistro}"
+                                      converterMessage="Indique la fecha con yyyy-MM-dd"
+                                      label="Fecha Registro">
+                            <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+                            <f:passThroughAttribute name="type" value="date"/>
+                        </p:datePicker>
+                    </div>
+                    <div class="p-col">
+                        <p:message for="fechaRegistro" style="color: red;"/>
+                    </div>
+                </div>
+                <div class="p-field p-grid">
+                    <p:outputLabel value="#{msg['producto.categoria']}" for="categoria" class="p-col-fixed" style="width: 200px;"/>
+                    <div class="p-col">
+                        <p:selectOneMenu id="categoria" value="#{producto.categoria}">
+                            <f:selectItem itemLabel="- Seleccionar -" itemValue="#{null}"/>
+                            <f:selectItems value="#{categorias}" var="cat" itemLabel="#{cat.nombre}"/>
+                            <f:converter binding="#{categoriaConverter}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-col">
+                        <p:message for="categoria" style="color: red;"/>
+                    </div>
+                </div>
+                <div class="p-field p-grid">
+                    <p:commandButton
+                            value="#{producto.id > 0 ? msg['producto.boton.editar'] : msg['producto.boton.crear']}"
+                            action="#{productoController.guardar}" class="ui-button-warning" ajax="false"/>
                     <h:inputHidden value="#{producto.id}"/>
-                    <p>&#160;</p>
-
-                </p:panelGrid>
+                </div>
             </h:form>
-        </p:panelGrid>
+        </p:panel>
 
     </ui:define>
 
