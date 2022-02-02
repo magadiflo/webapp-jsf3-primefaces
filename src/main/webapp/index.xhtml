@@ -77,9 +77,12 @@
                     </h:form>
                 </p:column>
             </p:dataTable>
-
+            <p:dialog  header="#{productoController.producto.id>0? msg['producto.boton.editar']: msg['producto.boton.crear']} #{msg['producto.texto']}"
+                       widgetVar="dialogForm" minHeight="200" minWidth="500" showEffect="fade" modal="true">
+                <p:ajax event="close" listener="#{productoController.cerrarDialogo}" update="formProducto" />
+                <ui:include src="form.xhtml" />
+            </p:dialog>
         </p:card>
-
     </ui:define>
 
 </ui:composition>
